@@ -8,14 +8,102 @@
 
 import SwiftUI
 
-struct ActressListView: View {
+struct ActressListRootView: View {
+    @ObservedObject var actressListViewControl:ActressListViewControl
+    
+    
+    init(){
+        self.actressListViewControl = ActressListViewControl()
+        
+        
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            Form{
+                Section{
+                    Picker(selection: self.$actressListViewControl.selectionIndex, label: Text("並べ替え"), content: {
+                        ForEach(0..<self.actressListViewControl.selectionArray.count){
+                            Text(self.actressListViewControl.selectionArray[$0])
+                        }
+                    })//.pickerStyle(WheelPickerStyle())
+                }
+                
+                List(0..<self.actressListViewControl.pageCount){page in
+                    NavigationLink(destination: ActressListView(actressArray: self.actressListViewControl.actressesBunchArray[page])){
+                        HStack{
+                            Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].name)
+                            Spacer()
+                            Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].name)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
-struct ActressListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActressListView()
+class ActressListViewControl:ObservableObject{
+    @Published var actresses:[ActressViewModel]
+    @Published var actressesBunchArray:[[ActressViewModel]]
+    var selectionArray:[String] = ["あいうえお順","あいうえお逆順","若い順","若くない順","ランダム"]
+    var selectionIndex:Int = 0{
+        didSet{
+            switch self.selectionArray[self.selectionIndex]{
+            case "あいうえお順":
+                self.actresses.sort{$0.ruby < $1.ruby}
+            case "あいうえお逆順":
+                self.actresses.sort{$0.ruby > $1.ruby}
+            case "ランダム":
+                self.actresses.shuffle()
+            case "若い順":
+                self.actresses.sort{$0.birthday! > $1.birthday!}
+                case "若くない順":
+                self.actresses.sort{$0.birthday! < $1.birthday!}
+            default:
+                print("Default")
+            }
+            
+            self.sortBunchArray()
+        }
+    }
+    var pageCount:Int
+    var pageRange = [Range<Int>]()
+    init(){
+        self.actresses = ActressData.actresses
+        self.actressesBunchArray = [[ActressViewModel]]()
+        self.pageCount = ((ActressData.actresses.count-1)/100) + 1
+        for i in 0..<self.pageCount{
+            let firstIndex = i * 100
+            var lastIndex = firstIndex + 100
+            lastIndex = (lastIndex > self.actresses.count) ? self.actresses.count:lastIndex
+            self.pageRange.append(firstIndex..<lastIndex)
+        }
+        self.actresses.shuffle()
+        self.sortBunchArray()
+    }
+    func sortBunchArray(){
+        self.actressesBunchArray.removeAll()
+        for i in 0..<self.pageCount{
+            var tempoActresses = [ActressViewModel]()
+            for j in self.pageRange[i]{
+                tempoActresses.append(self.actresses[j])
+            }
+            self.actressesBunchArray.append(tempoActresses)
+        }
+    }
+}
+
+struct ActressListView:View{
+    var actressArray:[ActressViewModel]
+    init(actressArray:[ActressViewModel]){
+        self.actressArray = actressArray
+    }
+    var body:some View{
+        NavigationView{
+            List(0..<self.actressArray.count){num in
+                self.actressArray[num]
+            }
+        }
     }
 }

@@ -34,7 +34,7 @@ class GetPost{
 class ControlView:ObservableObject{
     var apiurl:MakeAPIURL = MakeAPIURL(apiType: .ActressSearch)
     var getPosts:[GetPost] = [GetPost]()
-    var totalPages:Int = 0
+    var totalPages:Int = 999
     
     @Published var isLoadedComplete:Bool = false
     @Published var actressTotalNum:Int = 0
@@ -45,8 +45,8 @@ class ControlView:ObservableObject{
             }
         }
     }
-    init(){
-        self.apiurl.changeDateToString(ageNum: 30)
+    init(ageNum:Int){
+        self.apiurl.changeDateToString(ageNum: ageNum)
         self.getPosts.append(GetPost(urlString: self.apiurl.getURL()))
         self.getPostsInitial()
     }
@@ -88,11 +88,32 @@ class ControlView:ObservableObject{
     }
 }
 
-struct ActressViewModel{
+struct ActressViewModel:View,Identifiable{
+    var id = UUID()
     var post:ActressModel.Result.Actress
-    var name:String{return post.name!}
+    
+    var actressId:String
+    var name:String
+    var ruby:String
+    var birthday:Date?
     init(post:ActressModel.Result.Actress){
         self.post = post
+        self.actressId = post.id!
+        self.name = post.name!
+        self.ruby = post.ruby!
+        if let myBirthday = post.birthday{
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            self.birthday = dateFormatter.date(from:myBirthday)!
+        }
+        
+    }
+    var body:some View{
+        HStack{
+            Text("\(self.birthday!)")
+        }
     }
 }
 

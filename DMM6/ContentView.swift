@@ -10,17 +10,11 @@ import SwiftUI
 
 struct LoadingView: View {
     //@EnvironmentObject var environmantalObject:EnvironmentalObjectClass
-    @ObservedObject var control = ControlView()
+    @ObservedObject var control = ControlView(ageNum: 50)
     var body: some View {
         VStack{
             if self.control.isLoadedComplete{
-                Button(action: {print(self.control.isLoadedComplete)}){
-                    VStack{
-                        Text("Complete")
-                        Text("\(ActressData.actresses.count)")
-                        Text("\(ActressData.actresses.count)")
-                    }
-                }
+                    ActressListRootView()
             }else{
                 VStack{
                     Text("Loading...")

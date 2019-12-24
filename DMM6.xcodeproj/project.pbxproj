@@ -16,6 +16,7 @@
 		52E7F94B23AF82AD009CB968 /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F94A23AF82AD009CB968 /* ControlView.swift */; };
 		52E7F94D23AF8353009CB968 /* APIURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F94C23AF8353009CB968 /* APIURL.swift */; };
 		52E7F94F23AF8929009CB968 /* ActressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F94E23AF8929009CB968 /* ActressModel.swift */; };
+		52E7F95123B0DBE9009CB968 /* ActressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F95023B0DBE9009CB968 /* ActressListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		52E7F94A23AF82AD009CB968 /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
 		52E7F94C23AF8353009CB968 /* APIURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURL.swift; sourceTree = "<group>"; };
 		52E7F94E23AF8929009CB968 /* ActressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActressModel.swift; sourceTree = "<group>"; };
+		52E7F95023B0DBE9009CB968 /* ActressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActressListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +49,7 @@
 			isa = PBXGroup;
 			children = (
 				52E7F94A23AF82AD009CB968 /* ControlView.swift */,
+				52E7F95023B0DBE9009CB968 /* ActressListView.swift */,
 				52E7F94C23AF8353009CB968 /* APIURL.swift */,
 				52E7F94E23AF8929009CB968 /* ActressModel.swift */,
 				52E7F93523AF8285009CB968 /* DMM6 */,
@@ -157,6 +160,7 @@
 			files = (
 				52E7F94B23AF82AD009CB968 /* ControlView.swift in Sources */,
 				52E7F93723AF8285009CB968 /* AppDelegate.swift in Sources */,
+				52E7F95123B0DBE9009CB968 /* ActressListView.swift in Sources */,
 				52E7F93923AF8285009CB968 /* SceneDelegate.swift in Sources */,
 				52E7F94D23AF8353009CB968 /* APIURL.swift in Sources */,
 				52E7F93B23AF8285009CB968 /* ContentView.swift in Sources */,
