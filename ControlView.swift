@@ -93,26 +93,92 @@ struct ActressViewModel:View,Identifiable{
     var id = UUID()
     var post:ActressModel.Result.Actress
     
+    var appearString = [String]()
     var actressId:String//女優ID
     var name:String//女優名
     var ruby:String//女優名（読み仮名）
     var birthday:Date?//生年月日
-    var bust:String?//バスト
-    var waist:String?//ウェスト
-    var hip:String?//ヒップ
+    var bust:Int?//バスト
+    var waist:Int?//ウェスト
+    var hip:Int?//ヒップ
+    var height:Int?//身長
+    var cup:String?//カップ数
+    var blood_type:String?//血液型
+    var prefectures:String?//出身地
+    
     init(post:ActressModel.Result.Actress){
         self.post = post
+        //女優ID
         self.actressId = post.id!
+        //女優名
         self.name = post.name!
+        //女優名（読み仮名）0
         self.ruby = post.ruby!
-        
+        self.appearString.append(self.ruby)
+        //生年月日1
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         self.birthday = dateFormatter.date(from:post.birthday!)
-        
-        
+        self.appearString.append(post.birthday!)
+        //バスト2
+        if let myString = post.bust{
+            self.bust = Int(myString)
+            self.appearString.append("B:\(myString)cm")
+        }else{
+            self.bust = nil
+            self.appearString.append("B:不明")
+        }
+        //ウェスト3
+        if let myString = post.waist{
+            self.waist = Int(myString)
+            self.appearString.append("W:\(myString)cm")
+        }else{
+            self.waist = nil
+            self.appearString.append("W:不明")
+        }
+        //ヒップ4
+        if let myString = post.hip{
+            self.hip = Int(myString)
+            self.appearString.append("H:\(myString)cm")
+        }else{
+            self.hip = nil
+            self.appearString.append("H:不明")
+        }
+        //身長5
+        if let myString = post.height{
+            self.height = Int(myString)
+            self.appearString.append("身長:\(myString)cm")
+        }else{
+            self.height = nil
+            self.appearString.append("身長:不明")
+        }
+        //カップ数6
+        if let myString = post.cup{
+            self.cup = myString
+            self.appearString.append("\(myString)カップ")
+        }else{
+            self.cup = nil
+            self.appearString.append("カップ数:不明")
+        }
+        //血液型7
+        if let myString = post.blood_type{
+            self.blood_type = myString
+            self.appearString.append("血液型:\(myString)型")
+        }else{
+            self.blood_type = nil
+            self.appearString.append("血液型:不明")
+        }
+        //出身地8
+        if let myString = post.prefectures{
+            self.prefectures = myString
+            self.appearString.append("出身地:\(myString)")
+        }else{
+            self.prefectures = nil
+            self.appearString.append("出身地不明")
+        }
+        //
     }
     var body:some View{
         HStack{
