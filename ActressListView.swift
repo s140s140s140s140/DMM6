@@ -44,21 +44,33 @@ struct ActressListRootView: View {
 }
 
 class ActressListViewControl:ObservableObject{
+    enum PickerStrings:String, CaseIterable{
+        case hiraganaIncrement = "あいうえお順"
+        case hiraganaDecrement = "あいうえお逆順"
+        case ageIncrement = "若い順"
+        case ageDecrement = "若くない順"
+        case random = "ランダム"
+    }
+    
+    
     @Published var actresses:[ActressViewModel]
     @Published var actressesBunchArray:[[ActressViewModel]]
-    var selectionArray:[String] = ["あいうえお順","あいうえお逆順","若い順","若くない順","ランダム"]
+
+    var selectionArray = [PickerStrings.RawValue]()
+    
     var selectionIndex:Int = 0{
         didSet{
             switch self.selectionArray[self.selectionIndex]{
-            case "あいうえお順":
+                
+            case PickerStrings.hiraganaIncrement.rawValue:
                 self.actresses.sort{$0.ruby < $1.ruby}
-            case "あいうえお逆順":
+            case PickerStrings.hiraganaDecrement.rawValue:
                 self.actresses.sort{$0.ruby > $1.ruby}
-            case "ランダム":
+            case PickerStrings.random.rawValue:
                 self.actresses.shuffle()
-            case "若い順":
+            case PickerStrings.ageIncrement.rawValue:
                 self.actresses.sort{$0.birthday! > $1.birthday!}
-                case "若くない順":
+            case PickerStrings.ageDecrement.rawValue:
                 self.actresses.sort{$0.birthday! < $1.birthday!}
             default:
                 print("Default")
@@ -70,6 +82,10 @@ class ActressListViewControl:ObservableObject{
     var pageCount:Int
     var pageRange = [Range<Int>]()
     init(){
+        for p in PickerStrings.allCases{
+            self.selectionArray.append(p.rawValue)
+        }
+        
         self.actresses = ActressData.actresses
         self.actressesBunchArray = [[ActressViewModel]]()
         self.pageCount = ((ActressData.actresses.count-1)/100) + 1
@@ -79,7 +95,7 @@ class ActressListViewControl:ObservableObject{
             lastIndex = (lastIndex > self.actresses.count) ? self.actresses.count:lastIndex
             self.pageRange.append(firstIndex..<lastIndex)
         }
-        self.actresses.shuffle()
+        self.actresses.sort{$0.ruby < $1.ruby}
         self.sortBunchArray()
     }
     func sortBunchArray(){

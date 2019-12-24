@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftUI
-
+//JSONデータ書き出し用
 class GetPost{
     var url:URL
     init(urlString:String){
@@ -50,7 +50,7 @@ class ControlView:ObservableObject{
         self.getPosts.append(GetPost(urlString: self.apiurl.getURL()))
         self.getPostsInitial()
     }
-    
+    //    JSONデータをページ数分呼び出し
     func getPostsInitial(){
         self.getPosts[0].getPost(completion: {post in
             guard let result = post?.result else{
@@ -80,6 +80,7 @@ class ControlView:ObservableObject{
             })
         }
     }
+    //ActressDataクラスにデータを格納
     func iterateStoreActress(actresses:[ActressModel.Result.Actress]){
         for actress in actresses{
             self.actressLoadedNum += 1
@@ -87,27 +88,30 @@ class ControlView:ObservableObject{
         }
     }
 }
-
+//女優VM
 struct ActressViewModel:View,Identifiable{
     var id = UUID()
     var post:ActressModel.Result.Actress
     
-    var actressId:String
-    var name:String
-    var ruby:String
-    var birthday:Date?
+    var actressId:String//女優ID
+    var name:String//女優名
+    var ruby:String//女優名（読み仮名）
+    var birthday:Date?//生年月日
+    var bust:String?//バスト
+    var waist:String?//ウェスト
+    var hip:String?//ヒップ
     init(post:ActressModel.Result.Actress){
         self.post = post
         self.actressId = post.id!
         self.name = post.name!
         self.ruby = post.ruby!
-        if let myBirthday = post.birthday{
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-            self.birthday = dateFormatter.date(from:myBirthday)!
-        }
+        self.birthday = dateFormatter.date(from:post.birthday!)
+        
         
     }
     var body:some View{
@@ -117,11 +121,11 @@ struct ActressViewModel:View,Identifiable{
     }
 }
 
-
+//environmentObject
 class EnvironmentalObjectClass:ObservableObject{
-
+    
 }
-
+//女優データを格納
 class ActressData{
     static var actresses = [ActressViewModel]()
 }
