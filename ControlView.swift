@@ -88,6 +88,9 @@ class ControlView:ObservableObject{
         }
     }
 }
+
+
+
 //女優VM
 struct ActressViewModel:View,Identifiable{
     var id = UUID()
@@ -96,15 +99,22 @@ struct ActressViewModel:View,Identifiable{
     var appearString = [String]()
     var actressId:String//女優ID
     var name:String//女優名
-    var ruby:String//女優名（読み仮名）
-    var birthday:Date?//生年月日
-    var bust:Int?//バスト
-    var waist:Int?//ウェスト
-    var hip:Int?//ヒップ
-    var height:Int?//身長
-    var cup:String?//カップ数
-    var blood_type:String?//血液型
-    var prefectures:String?//出身地
+    var ruby:String//女優名（読み仮名）0
+    var birthday:Date?//生年月日1
+    var bust:Int?//バスト2
+    var waist:Int?//ウェスト3
+    var hip:Int?//ヒップ4
+    var height:Int?//身長5
+    var cup:String?//カップ数6
+    var blood_type:String?//血液型7
+    var prefectures:String?//出身地8
+    var hobby:String?//趣味9
+    
+    var smallImageURLString:String//画像（小）
+    //var smallImageView:SmallImageView
+    
+    var largeImageURLString:String//画像（大）
+    var largeImageView:LargeImageView
     
     init(post:ActressModel.Result.Actress){
         self.post = post
@@ -178,11 +188,34 @@ struct ActressViewModel:View,Identifiable{
             self.prefectures = nil
             self.appearString.append("出身地不明")
         }
-        //
+        //趣味9
+        if let myString = post.hobby{
+            self.hobby = myString
+            self.appearString.append("趣味:\(myString)")
+        }else{
+            self.hobby = nil
+            self.appearString.append("")
+        }
+        
+        //画像（小）
+        if let myString = post.imageURL?.small{
+            self.smallImageURLString = myString
+        }else{
+            self.smallImageURLString = ""
+        }
+        //self.smallImageView = SmallImageView(urlString: self.smallImageURLString)
+        
+        //画像（大）
+        if let myString = post.imageURL?.large{
+            self.largeImageURLString = myString
+        }else{
+            self.largeImageURLString = ""
+        }
+        self.largeImageView = LargeImageView(urlString: self.largeImageURLString)
     }
     var body:some View{
         HStack{
-            Text("\(self.birthday!)")
+            self.largeImageView.body
         }
     }
 }

@@ -31,17 +31,26 @@ struct ActressListRootView: View {
                 
                 List(0..<self.actressListViewControl.pageCount){page in
                     NavigationLink(destination: ActressListView(actressArray: self.actressListViewControl.actressesBunchArray[page])){
+                        Image(systemName: "\(page+1).circle")
+                            .resizable()
+                            .frame(width: 25.0, height: 25.0)
                         HStack{
-                            VStack{
+                            SmallImageView(urlString: self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].smallImageURLString)
+                            VStack(alignment:.leading){
                                 Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].name)
                                 Text("\(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].appearString[self.actressListViewControl.actressAppearIndex])")
                                     .font(.caption)
                             }
                             Spacer()
-                            VStack{
-                                Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].name)
-                                Text("\(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].appearString[self.actressListViewControl.actressAppearIndex])")
-                                    .font(.caption)
+                            
+                            HStack{
+                                
+                                VStack(alignment:.trailing){
+                                    Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].name)
+                                    Text("\(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].appearString[self.actressListViewControl.actressAppearIndex])")
+                                        .font(.caption)
+                                }
+                                SmallImageView(urlString: self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].smallImageURLString)
                             }
                         }
                     }
@@ -96,9 +105,7 @@ class ActressListViewControl:ObservableObject{
             case PickerStrings.hiraganaDecrement.rawValue:
                 self.actresses.sort{$0.ruby > $1.ruby}
                 self.actressAppearIndex = 0
-            //
-            case PickerStrings.random.rawValue:
-                self.actresses.shuffle()
+                
             //"若い順"
             case PickerStrings.ageIncrement.rawValue:
                 self.actresses.sort{$0.birthday! > $1.birthday!}
@@ -182,7 +189,7 @@ class ActressListViewControl:ObservableObject{
                     return true
                 }
                 self.actressAppearIndex = 6
-                //"カップ数が大きい順"
+            //"カップ数が大きい順"
             case PickerStrings.cupDecrement.rawValue:
                 self.actresses.sort{(a1,a2) ->Bool in
                     if a1.cup == nil{return false}
@@ -191,7 +198,7 @@ class ActressListViewControl:ObservableObject{
                 }
                 self.actressAppearIndex = 6
                 
-                //"血液型別"
+            //"血液型別"
             case PickerStrings.bloodType.rawValue:
                 self.actresses.sort{(a1,a2) ->Bool in
                     if a1.blood_type == nil{return false}
@@ -200,7 +207,7 @@ class ActressListViewControl:ObservableObject{
                 }
                 self.actressAppearIndex = 7
                 
-                //"出身地別"
+            //"出身地別"
             case PickerStrings.prefecture.rawValue:
                 self.actresses.sort{(a1,a2) ->Bool in
                     if a1.prefectures == nil{return false}
@@ -209,6 +216,10 @@ class ActressListViewControl:ObservableObject{
                 }
                 self.actressAppearIndex = 8
                 
+            //"ランダム"
+            case PickerStrings.random.rawValue:
+                self.actresses.shuffle()
+                self.actressAppearIndex = 9
                 
                 
             default:
