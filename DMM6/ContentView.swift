@@ -8,22 +8,7 @@
 
 import SwiftUI
 
-struct LoadingView: View {
-    //@EnvironmentObject var environmantalObject:EnvironmentalObjectClass
-    @ObservedObject var control = ControlView(ageNum: 40)
-    var body: some View {
-        VStack{
-            if self.control.isLoadedComplete{
-                    ActressListRootView()
-            }else{
-                VStack{
-                    Text("Loading...")
-                    Text("\(control.actressLoadedNum)/\(control.actressTotalNum)")
-                }
-            }
-        }
-    }
-}
+
 
 
 struct ContentView: View {

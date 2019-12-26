@@ -14,8 +14,6 @@ struct ActressListRootView: View {
     
     init(){
         self.actressListViewControl = ActressListViewControl()
-        
-        
     }
     
     var body: some View {
@@ -87,13 +85,7 @@ class ActressListViewControl:ObservableObject{
     @Published var actressesBunchArray:[[ActressViewModel]]
     var actressAppearIndex:Int = 0
     var selectionArray = [PickerStrings.RawValue]()
-    //var sample:[Int?] = [nil,1,3,5,nil,2]
-    //sample.sort { (n1, n2) -> Bool in
-    //    if n1 == nil {return false}
-    //    if let nn1 = n1, let nn2 = n2{return nn1 < nn2}
-    //    return true
-    //}
-    //print(sample)
+
     var selectionIndex:Int = 0{
         didSet{
             switch self.selectionArray[self.selectionIndex]{
@@ -268,7 +260,8 @@ struct ActressListView:View{
     var body:some View{
         NavigationView{
             List(0..<self.actressArray.count){num in
-                VStack{
+                HStack{
+                    LargeImageView(urlString: self.actressArray[num].largeImageURLString)
                     self.actressArray[num]
                 }
             }

@@ -44,7 +44,7 @@ struct ActressModel:Codable {
             var imageURL:ImageURL?
             struct ListURL:Codable{
                 var digital:String?
-                var monthly:String?
+                var monthly_premium:String?
                 var ppm:String?
                 var mono:String?
                 var rental:String?
