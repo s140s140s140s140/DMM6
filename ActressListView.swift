@@ -8,55 +8,7 @@
 
 import SwiftUI
 
-struct ActressListRootView: View {
-    @ObservedObject var actressListViewControl:ActressListViewControl
-    
-    
-    init(){
-        self.actressListViewControl = ActressListViewControl()
-    }
-    
-    var body: some View {
-        NavigationView{
-            Form{
-                Section{
-                    Picker(selection: self.$actressListViewControl.selectionIndex, label: Text("並べ替え"), content: {
-                        ForEach(0..<self.actressListViewControl.selectionArray.count){
-                            Text(self.actressListViewControl.selectionArray[$0])
-                        }
-                    })//.pickerStyle(WheelPickerStyle())
-                }
-                
-                List(0..<self.actressListViewControl.pageCount){page in
-                    NavigationLink(destination: ActressListView(actressArray: self.actressListViewControl.actressesBunchArray[page])){
-                        Image(systemName: "\(page+1).circle")
-                            .resizable()
-                            .frame(width: 25.0, height: 25.0)
-                        HStack{
-                            SmallImageView(urlString: self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].smallImageURLString)
-                            VStack(alignment:.leading){
-                                Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].name)
-                                Text("\(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].first!].appearString[self.actressListViewControl.actressAppearIndex])")
-                                    .font(.caption)
-                            }
-                            Spacer()
-                            
-                            HStack{
-                                
-                                VStack(alignment:.trailing){
-                                    Text(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].name)
-                                    Text("\(self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].appearString[self.actressListViewControl.actressAppearIndex])")
-                                        .font(.caption)
-                                }
-                                SmallImageView(urlString: self.actressListViewControl.actresses[self.actressListViewControl.pageRange[page].last!].smallImageURLString)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+
 
 class ActressListViewControl:ObservableObject{
     enum PickerStrings:String, CaseIterable{
@@ -85,7 +37,7 @@ class ActressListViewControl:ObservableObject{
     @Published var actressesBunchArray:[[ActressViewModel]]
     var actressAppearIndex:Int = 0
     var selectionArray = [PickerStrings.RawValue]()
-
+    
     var selectionIndex:Int = 0{
         didSet{
             switch self.selectionArray[self.selectionIndex]{
@@ -258,13 +210,14 @@ struct ActressListView:View{
         self.actressArray = actressArray
     }
     var body:some View{
-        NavigationView{
-            List(0..<self.actressArray.count){num in
+        List(0..<self.actressArray.count){num in
+            NavigationLink(destination: ItemListByActress(actressVM: self.actressArray[num])){
                 HStack{
-                    LargeImageView(urlString: self.actressArray[num].largeImageURLString)
-                    self.actressArray[num]
+                    LargeImageView(urlString: self.actressArray[num].largeImageURLString)//ここのみ大きいイメージ
                 }
+                self.actressArray[num]
             }
         }
     }
 }
+

@@ -55,7 +55,7 @@ class SmallImageLoader:ObservableObject{
 
 struct LargeImageView:View{
     //125*125
-    let imageSide:CGFloat = 100.0
+    let imageSide:CGFloat = 125.0
     @ObservedObject var largeImageLoader = LargeImageLoader()
     init(urlString:String){
         guard urlString != "" else{

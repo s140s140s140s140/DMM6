@@ -19,6 +19,7 @@ struct ActressViewModel:View,Identifiable{
     var name:String//女優名
     var ruby:String//女優名（読み仮名）0
     var birthday:Date?//生年月日1
+    var age:String
     var bust:Int?//バスト2
     var waist:Int?//ウェスト3
     var hip:Int?//ヒップ4
@@ -52,11 +53,18 @@ struct ActressViewModel:View,Identifiable{
         self.appearString.append(self.ruby)
         //生年月日1
         let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .full
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        self.birthday = dateFormatter.date(from:post.birthday!)
-        self.appearString.append(post.birthday!)
+        self.birthday = dateFormatter.date(from:post.birthday!)!
+        //dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "ydMM", options: 0, locale: Locale(identifier: "ja_JP"))
+        let dateString:String = dateFormatter.string(from: self.birthday!)
+        let ageInt:Int = Calendar(identifier: .gregorian).dateComponents([.year], from: self.birthday!, to: Date()).year!
+        self.age = "\(ageInt)"
+        //dateString += "(\(ageInt))"
+        self.appearString.append(dateString)
+        
         //バスト2
         if let myString = post.bust{
             self.bust = Int(myString)
@@ -182,23 +190,34 @@ struct ActressViewModel:View,Identifiable{
     
     var body:some View{
         HStack{
-            Text(self.name)
+            VStack(alignment: .leading){
+                Text(self.name).font(.headline)
+                Text(self.appearString[0]).font(.caption)
+                Spacer()
+                HStack{
+                    Text(self.appearString[1])
+                    Text("(\(self.age))")
+                }.font(.caption)
+                HStack{
+                    //Text(self.appearString[5]).font(.caption)
+                    Text(self.appearString[2])
+                    Text(self.appearString[3])
+                    Text(self.appearString[4])
+                }.font(.caption)
+                HStack{
+                    Text(self.appearString[6])
+                    Text(self.appearString[5])
+                }.font(.caption)
+                HStack{
+                    Text(self.appearString[7])
+                    Text(self.appearString[8])
+                }.font(.caption)
+                HStack{
+                    Text(self.appearString[9])
+                }.font(.caption)
+            }
             Spacer()
-            VStack{
-                Button(action: {
-                    
-                    self.showSafari.toggle()
-                    
-                }){
-                    Image(systemName: "safari")
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                    .sheet(isPresented: $showSafari){
-                    safari(urlString: self.digital)
-                }
-            }
-            }
-            //Text(self.digital)
+
         }
     }
 }
