@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5226450323B4EFCB00E95AC2 /* ActressListRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226450223B4EFCB00E95AC2 /* ActressListRootView.swift */; };
 		5226450523B4F60200E95AC2 /* ItemListByActress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226450423B4F60200E95AC2 /* ItemListByActress.swift */; };
+		5226450723B64A6600E95AC2 /* ActressSelectedByBirthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226450623B64A6600E95AC2 /* ActressSelectedByBirthday.swift */; };
 		52E7F93723AF8285009CB968 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F93623AF8285009CB968 /* AppDelegate.swift */; };
 		52E7F93923AF8285009CB968 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F93823AF8285009CB968 /* SceneDelegate.swift */; };
 		52E7F93B23AF8285009CB968 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E7F93A23AF8285009CB968 /* ContentView.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		5226450223B4EFCB00E95AC2 /* ActressListRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActressListRootView.swift; sourceTree = "<group>"; };
 		5226450423B4F60200E95AC2 /* ItemListByActress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListByActress.swift; sourceTree = "<group>"; };
+		5226450623B64A6600E95AC2 /* ActressSelectedByBirthday.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActressSelectedByBirthday.swift; sourceTree = "<group>"; };
 		52E7F93323AF8285009CB968 /* DMM6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DMM6.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E7F93623AF8285009CB968 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E7F93823AF8285009CB968 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				52E7F95023B0DBE9009CB968 /* ActressListView.swift */,
 				5226450423B4F60200E95AC2 /* ItemListByActress.swift */,
 				5226450223B4EFCB00E95AC2 /* ActressListRootView.swift */,
+				5226450623B64A6600E95AC2 /* ActressSelectedByBirthday.swift */,
 				52E7F94A23AF82AD009CB968 /* ControlView.swift */,
 				52E7F95A23B41E89009CB968 /* ActressData.swift */,
 				52E7F95423B3B925009CB968 /* ActressViewModel.swift */,
@@ -192,6 +195,7 @@
 				5226450323B4EFCB00E95AC2 /* ActressListRootView.swift in Sources */,
 				52E7F94D23AF8353009CB968 /* APIURL.swift in Sources */,
 				52E7F95B23B41E89009CB968 /* ActressData.swift in Sources */,
+				5226450723B64A6600E95AC2 /* ActressSelectedByBirthday.swift in Sources */,
 				52E7F93B23AF8285009CB968 /* ContentView.swift in Sources */,
 				52E7F95323B2679F009CB968 /* ImageLoader.swift in Sources */,
 				52E7F94F23AF8929009CB968 /* ActressModel.swift in Sources */,
